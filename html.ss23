@@ -38,23 +38,12 @@
         .play-button:hover {
             background-color: #0056b3; /* Цвет кнопки при наведении */
         }
-        .color-changing-text {
-            font-size: 36px; /* Размер шрифта для текста */
-            animation: colorChange 3s infinite; /* Анимация изменения цвета */
-        }
-        @keyframes colorChange {
-            0% { color: red; }
-            25% { color: yellow; }
-            50% { color: green; }
-            75% { color: blue; }
-            100% { color: red; }
-        }
     </style>
 </head>
 <body>
 
 <div class="player">
-    <h2 class="color-changing-text">лох</h2> <!-- Текст, который будет менять цвет -->
+    <h2>Музыкальный плеер</h2>
     <audio id="audio" src="C:\Users\18kon_kn9b95p\Downloads\mysong.mp3.mp3" preload="auto"></audio>
     <div>
         <button id="playBtn" class="play-button">►</button> <!-- Символ "play" -->

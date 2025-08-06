@@ -3,81 +3,1535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Музыкальный плеер</title>
+    <title>Python Tutorial - Полное руководство по Python</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #3776ab;
+            --secondary: #ffd43b;
+            --dark: #0d2b3e;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --c-color: #555555;
+            --csharp-color: #9b4f96;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .logo h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+        }
+        
+        .language-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .language-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-btn.active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: white;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #ffc107;
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .advantages {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .advantage-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .history {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .commands {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+        
+        .command-categories {
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        .player {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+        .category-btn {
+            padding: 8px 16px;
+            background-color: var(--light);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .command-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .command-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .command-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+        }
+        
+        .resources {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-img {
+            height: 150px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .resource-content {
+            padding: 1.5rem;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        /* Стили для разделов C и C# */
+        .language-section {
+            padding: 4rem 0;
+        }
+        
+        .c-section {
+            background-color: #f8f9fa;
+            border-top: 4px solid var(--c-color);
+        }
+        
+        .csharp-section {
+            background-color: white;
+            border-top: 4px solid var(--csharp-color);
+        }
+        
+        .language-title {
+            color: var(--c-color);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .csharp-title {
+            color: var(--csharp-color);
+        }
+        
+        .language-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .language-feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .c-feature-card {
+            border-left: 4px solid var(--c-color);
+        }
+        
+        .csharp-feature-card {
+            border-left: 4px solid var(--csharp-color);
+        }
+        
+        /* Стили для раздела с библиотеками Python */
+        .libraries-section {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+        
+        .libraries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .library-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .library-category {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .library-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .library-item {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .library-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .support {
+            padding: 4rem 0;
+            background-color: var(--dark);
+            color: white;
             text-align: center;
         }
-        .play-button {
-            width: 100px; /* Ширина кнопки */
-            height: 100px; /* Высота кнопки */
-            border: none;
-            border-radius: 50%; /* Круглая форма */
-            background-color: #007bff; /* Цвет фона кнопки */
-            color: white; /* Цвет текста */
-            font-size: 24px; /* Размер шрифта */
-            cursor: pointer; /* Курсор в виде указателя */
-            display: flex; /* Flexbox для центрирования текста */
-            justify-content: center; /* Центрирование по горизонтали */
-            align-items: center; /* Центрирование по вертикали */
-            transition: background-color 0.3s; /* Плавный переход цвета */
+        
+        .support-content {
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .play-button:hover {
-            background-color: #0056b3; /* Цвет кнопки при наведении */
+        
+        .support-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
         }
-        .color-changing-text {
-            font-size: 36px; /* Размер шрифта для текста */
-            animation: colorChange 3s infinite; /* Анимация изменения цвета */
+        
+        .card-number {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            display: inline-block;
         }
-        @keyframes colorChange {
-            0% { color: red; }
-            25% { color: yellow; }
-            50% { color: green; }
-            75% { color: blue; }
-            100% { color: red; }
+        
+        footer {
+            background-color: #222;
+            color: #aaa;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            color: #aaa;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fab fa-python"></i>
+                <h1>Python Tutorial</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Особенности</a></li>
+                    <li><a href="#advantages">Преимущества</a></li>
+                    <li><a href="#history">История</a></li>
+                    <li><a href="#commands">Команды</a></li>
+                    <li><a href="#libraries">Библиотеки</a></li>
+                    <li><a href="#resources">Ресурсы</a></li>
+                    <li><a href="#c-section">Язык C</a></li>
+                    <li><a href="#csharp-section">Язык C#</a></li>
+                    <li><a href="#support">Поддержать</a></li>
+                    <li>
+                        <div class="language-switcher">
+                            <button class="language-btn active" data-lang="ru">RU</button>
+                            <button class="language-btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero-content">
+            <h2 data-i18n="hero.title">Изучайте Python легко и эффективно</h2>
+            <p data-i18n="hero.subtitle">Полное руководство по языку программирования Python для начинающих и опытных разработчиков.</p>
+            <a href="#commands" class="btn" data-i18n="hero.button">Начать обучение</a>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title" data-i18n="features.title">Особенности Python</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 data-i18n="features.card1.title">Интерпретируемость</h3>
+                    <p data-i18n="features.card1.text">Python - интерпретируемый язык, код выполняется построчно, что упрощает тестирование и отладку.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 data-i18n="features.card2.title">Динамическая типизация</h3>
+                    <p data-i18n="features.card2.text">Тип переменной определяется автоматически во время выполнения, что делает язык более гибким.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 data-i18n="features.card3.title">Многопарадигменность</h3>
+                    <p data-i18n="features.card3.text">Поддерживает ООП, процедурное и функциональное программирование, позволяя выбирать оптимальный подход.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 data-i18n="features.card4.title">Кроссплатформенность</h3>
+                    <p data-i18n="features.card4.text">Код работает на Windows, macOS, Linux без изменений благодаря переносимости интерпретатора.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 data-i18n="features.card5.title">Большое сообщество</h3>
+                    <p data-i18n="features.card5.text">Активное сообщество разработчиков, готовых помочь с любыми вопросами и проблемами.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3 data-i18n="features.card6.title">Богатые библиотеки</h3>
+                    <p data-i18n="features.card6.text">Огромная коллекция библиотек для веб-разработки, анализа данных, машинного обучения и многого другого.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="section-title" data-i18n="advantages.title">Преимущества Python</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card1.title">Простота и читаемость</span></h3>
+                    <p data-i18n="advantages.card1.text">Python предлагает понятный синтаксис, что делает его привлекательным для опытных разработчиков и доступным для новичков. Код на Python часто выглядит как псевдокод, что облегчает его понимание.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card2.title">Богатая экосистема</span></h3>
+                    <p data-i18n="advantages.card2.text">Большое число полезных библиотек и модулей позволяет быстро решать различные задачи: Django/Flask для веба, Pandas/NumPy для данных, TensorFlow/PyTorch для ML, и многие другие.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card3.title">Кроссплатформенность</span></h3>
+                    <p data-i18n="advantages.card3.text">Python работает на большинстве операционных систем: Windows, macOS, Linux. Код, написанный на Python, может быть запущен на разных платформах без изменений.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card4.title">Интеграция с другими языками</span></h3>
+                    <p data-i18n="advantages.card4.text">Python позволяет легко интегрировать код на C/C++, Java и других языках. Это дает возможность использовать существующие библиотеки и расширять функциональность Python.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card5.title">Поддержка сообщества</span></h3>
+                    <p data-i18n="advantages.card5.text">Активное сообщество разработчиков всегда готово помочь новичкам. Существует множество форумов, чатов и ресурсов с готовыми решениями распространенных задач.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> <span data-i18n="advantages.card6.title">Гибкость парадигм</span></h3>
+                    <p data-i18n="advantages.card6.text">Python поддерживает ООП, функциональное, императивное и аспектно-ориентированное программирование, позволяя разработчикам выбирать оптимальный подход для каждой задачи.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="history" class="history">
+        <div class="container">
+            <h2 class="section-title" data-i18n="history.title">История Python</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1989</h3>
+                        <p data-i18n="history.item1">Гвидо ван Россум начинает работу над Python как хобби-проектом во время рождественских каникул. Название взято из шоу "Летающий цирк Монти Пайтона".</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1991</h3>
+                        <p data-i18n="history.item2">Выпущена первая версия Python (0.9.0) с базовыми возможностями. Язык уже включал классы, наследование и обработку исключений.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1994</h3>
+                        <p data-i18n="history.item3">Версия 1.0 добавляет функционал для обработки списков данных. Появляются lambda, map, filter и reduce.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>2000</h3>
+                        <p data-i18n="history.item4">Python 2.0 приносит поддержку Unicode и улучшенную систему сборки мусора. Добавлены списковые включения (list comprehensions).</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>2008</h3>
+                        <p data-i18n="history.item5">Выпущен Python 3.0 с устранением многих недостатков предыдущих версий. Это было крупное обновление, несовместимое с Python 2.x.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>2020</h3>
+                        <p data-i18n="history.item6">Официальное прекращение поддержки Python 2.7. Все проекты переходят на Python 3, который продолжает активно развиваться.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="commands" class="commands">
+        <div class="container">
+            <h2 class="section-title" data-i18n="commands.title">Основные команды Python</h2>
+            <div class="command-categories">
+                <button class="category-btn active" data-category="all" data-i18n="commands.categories.all">Все</button>
+                <button class="category-btn" data-category="data" data-i18n="commands.categories.data">Работа с данными</button>
+                <button class="category-btn" data-category="flow" data-i18n="commands.categories.flow">Управление потоком</button>
+                <button class="category-btn" data-category="objects" data-i18n="commands.categories.objects">Работа с объектами</button>
+            </div>
+            <div class="command-list">
+                <div class="command-card" data-category="data">
+                    <div class="command-name">print()</div>
+                    <p data-i18n="commands.data.print">Выводит данные на экран. Основная функция для отображения информации.</p>
+                    <pre><code>print("Hello, World!")</code></pre>
+                </div>
+                <div class="command-card" data-category="data">
+                    <div class="command-name">input()</div>
+                    <p data-i18n="commands.data.input">Получает ввод данных от пользователя. Возвращает строку.</p>
+                    <pre><code>name = input("Введите ваше имя: ")</code></pre>
+                </div>
+                <div class="command-card" data-category="data">
+                    <div class="command-name">len()</div>
+                    <p data-i18n="commands.data.len">Возвращает длину объекта (строки, списка, кортежа, словаря).</p>
+                    <pre><code>length = len("Python")  # Возвращает 6</code></pre>
+                </div>
+                <div class="command-card" data-category="data">
+                    <div class="command-name">type()</div>
+                    <p data-i18n="commands.data.type">Возвращает тип объекта.</p>
+                    <pre><code>print(type(42))  # &lt;class 'int'></code></pre>
+                </div>
+                <div class="command-card" data-category="flow">
+                    <div class="command-name">if, elif, else</div>
+                    <p data-i18n="commands.flow.if">Условные операторы для выполнения различных действий в зависимости от условий.</p>
+                    <pre><code>if x > 0:
+    print("Положительное")
+elif x < 0:
+    print("Отрицательное")
+else:
+    print("Ноль")</code></pre>
+                </div>
+                <div class="command-card" data-category="flow">
+                    <div class="command-name">for</div>
+                    <p data-i18n="commands.flow.for">Цикл для перебора элементов в последовательности.</p>
+                    <pre><code>for i in range(5):
+    print(i)</code></pre>
+                </div>
+                <div class="command-card" data-category="flow">
+                    <div class="command-name">while</div>
+                    <p data-i18n="commands.flow.while">Цикл, выполняющийся пока условие истинно.</p>
+                    <pre><code>while x < 10:
+    print(x)
+    x += 1</code></pre>
+                </div>
+                <div class="command-card" data-category="flow">
+                    <div class="command-name">break</div>
+                    <p data-i18n="commands.flow.break">Прерывает выполнение цикла.</p>
+                    <pre><code>while True:
+    answer = input("Выйти? (да/нет): ")
+    if answer == 'да':
+        break</code></pre>
+                </div>
+                <div class="command-card" data-category="flow">
+                    <div class="command-name">continue</div>
+                    <p data-i18n="commands.flow.continue">Переходит к следующей итерации цикла, пропуская оставшийся код.</p>
+                    <pre><code>for num in range(10):
+    if num % 2 == 0:
+        continue
+    print(num)</code></pre>
+                </div>
+                <div class="command-card" data-category="objects">
+                    <div class="command-name">del</div>
+                    <p data-i18n="commands.objects.del">Удаляет переменную или элемент из списка/словаря.</p>
+                    <pre><code>x = 10
+del x  # Удаляет переменную x</code></pre>
+                </div>
+                <div class="command-card" data-category="objects">
+                    <div class="command-name">getattr()</div>
+                    <p data-i18n="commands.objects.getattr">Возвращает значение атрибута объекта.</p>
+                    <pre><code>class MyClass:
+    attr = 42
+    
+obj = MyClass()
+value = getattr(obj, 'attr')  # 42</code></pre>
+                </div>
+                <div class="command-card" data-category="objects">
+                    <div class="command-name">setattr()</div>
+                    <p data-i18n="commands.objects.setattr">Устанавливает значение атрибута объекта.</p>
+                    <pre><code>setattr(obj, 'new_attr', 100)</code></pre>
+                </div>
+                <div class="command-card" data-category="objects">
+                    <div class="command-name">hasattr()</div>
+                    <p data-i18n="commands.objects.hasattr">Проверяет наличие атрибута у объекта.</p>
+                    <pre><code>if hasattr(obj, 'attr'):
+    print("Атрибут существует")</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Раздел с библиотеками Python -->
+    <section id="libraries" class="libraries-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="libraries.title">19 полезных библиотек Python</h2>
+            <div class="libraries-grid">
+                <div class="library-card">
+                    <div class="library-category" data-i18n="libraries.webdev">Для веб-разработки</div>
+                    <ul class="library-list">
+                        <li class="library-item"><strong>HTTPX</strong> - <span data-i18n="libraries.httpx">HTTP-клиент для синхронных и асинхронных запросов</span></li>
+                        <li class="library-item"><strong>Celery</strong> - <span data-i18n="libraries.celery">Распределенная очередь задач</span></li>
+                        <li class="library-item"><strong>Scrapy</strong> - <span data-i18n="libraries.scrapy">Фреймворк для веб-скрапинга</span></li>
+                        <li class="library-item"><strong>Dash</strong> - <span data-i18n="libraries.dash">Фреймворк для аналитических веб-приложений</span></li>
+                    </ul>
+                </div>
+                <div class="library-card">
+                    <div class="library-category" data-i18n="libraries.ml">Для Machine Learning</div>
+                    <ul class="library-list">
+                        <li class="library-item"><strong>NumPy</strong> - <span data-i18n="libraries.numpy">Работа с многомерными массивами</span></li>
+                        <li class="library-item"><strong>Pandas</strong> - <span data-i18n="libraries.pandas">Анализ и обработка данных</span></li>
+                        <li class="library-item"><strong>TensorFlow</strong> - <span data-i18n="libraries.tensorflow">Фреймворк для машинного обучения</span></li>
+                        <li class="library-item"><strong>LightGBM</strong> - <span data-i18n="libraries.lightgbm">Градиентный бустинг для задач ML</span></li>
+                    </ul>
+                </div>
+                <div class="library-card">
+                    <div class="library-category" data-i18n="libraries.data">Для форматирования и очистки данных</div>
+                    <ul class="library-list">
+                        <li class="library-item"><strong>Dora</strong> - <span data-i18n="libraries.dora">Очистка и анализ данных</span></li>
+                        <li class="library-item"><strong>Datacleaner</strong> - <span data-i18n="libraries.datacleaner">Автоматическая очистка данных</span></li>
+                        <li class="library-item"><strong>Tabulate</strong> - <span data-i18n="libraries.tabulate">Форматирование табличных данных</span></li>
+                        <li class="library-item"><strong>Scrubadub</strong> - <span data-i18n="libraries.scrubadub">Удаление конфиденциальных данных</span></li>
+                    </ul>
+                </div>
+                <div class="library-card">
+                    <div class="library-category" data-i18n="libraries.viz">Для визуализации данных</div>
+                    <ul class="library-list">
+                        <li class="library-item"><strong>Matplotlib</strong> - <span data-i18n="libraries.matplotlib">Построение графиков и диаграмм</span></li>
+                        <li class="library-item"><strong>Altair</strong> - <span data-i18n="libraries.altair">Статистическая визуализация</span></li>
+                        <li class="library-item"><strong>Bokeh</strong> - <span data-i18n="libraries.bokeh">Интерактивная визуализация для браузеров</span></li>
+                        <li class="library-item"><strong>Leather</strong> - <span data-i18n="libraries.leather">Простая и быстрая визуализация</span></li>
+                    </ul>
+                </div>
+                <div class="library-card">
+                    <div class="library-category" data-i18n="libraries.bots">Для создания Telegram-ботов</div>
+                    <ul class="library-list">
+                        <li class="library-item"><strong>Aiogram</strong> - <span data-i18n="libraries.aiogram">Асинхронный фреймворк для ботов</span></li>
+                        <li class="library-item"><strong>Python-telegram-bot</strong> - <span data-i18n="libraries.ptb">Синхронный фреймворк для ботов</span></li>
+                        <li class="library-item"><strong>Telebot</strong> - <span data-i18n="libraries.telebot">Простой API для создания ботов</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="resources" class="resources">
+        <div class="container">
+            <h2 class="section-title" data-i18n="resources.title">Ресурсы для изучения Python</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card1.title">Официальная документация</h3>
+                        <p data-i18n="resources.card1.text">Полное руководство по Python с примерами и объяснениями.</p>
+                        <a href="https://docs.python.org/3/" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card2.title">LearnPython.org</h3>
+                        <p data-i18n="resources.card2.text">Интерактивный учебник Python с упражнениями.</p>
+                        <a href="https://www.learnpython.org/" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card3.title">CheckiO</h3>
+                        <p data-i18n="resources.card3.text">Изучайте Python через решение игровых задач.</p>
+                        <a href="https://checkio.org/" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card4.title">MoscowPython</h3>
+                        <p data-i18n="resources.card4.text">YouTube канал с лекциями и разборами задач.</p>
+                        <a href="https://www.youtube.com/c/MoscowPython" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card5.title">Real Python</h3>
+                        <p data-i18n="resources.card5.text">Уроки и статьи для углубленного изучения Python.</p>
+                        <a href="https://realpython.com/" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-i18n="resources.card6.title">W3Schools</h3>
+                        <p data-i18n="resources.card6.text">Простые примеры и упражнения по Python.</p>
+                        <a href="https://www.w3schools.com/python/" class="resource-link" target="_blank" data-i18n="resources.link">Перейти →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Раздел про язык C -->
+    <section id="c-section" class="language-section c-section">
+        <div class="container">
+            <h2 class="section-title language-title" data-i18n="c.title">Язык программирования C</h2>
+            <div class="language-features">
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-microchip" style="color: var(--c-color);"></i> <span data-i18n="c.features.title">Особенности</span></h3>
+                    <p data-i18n="c.features.text">C — компилируемый статически типизированный язык общего назначения. Его синтаксис стал основой для C++, C#, Java и Objective-C.</p>
+                    <ul>
+                        <li data-i18n="c.features.item1">Близость к машинному коду, работа с символами, числами и адресами</li>
+                        <li data-i18n="c.features.item2">Статическая типизация: тип переменной определяется при объявлении</li>
+                        <li data-i18n="c.features.item3">Основные конструкции управления: циклы, условия, операторы выбора</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-history" style="color: var(--c-color);"></i> <span data-i18n="c.history.title">История</span></h3>
+                    <p data-i18n="c.history.text">Язык C был разработан в 1969–1973 годах сотрудником Bell Labs Деннисом Ритчи как развитие языка Би. Первоначально предназначался для реализации UNIX.</p>
+                    <ul>
+                        <li data-i18n="c.history.item1">1989: опубликован стандарт ANSI C (C89)</li>
+                        <li data-i18n="c.history.item2">1990: принят ISO как стандарт ISO C</li>
+                        <li data-i18n="c.history.item3">1999: стандарт C99 с новыми возможностями</li>
+                        <li data-i18n="c.history.item4">2011: стандарт C11 с многопоточностью</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-code" style="color: var(--c-color);"></i> <span data-i18n="c.syntax.title">Синтаксис</span></h3>
+                    <p data-i18n="c.syntax.text">Программа на C начинается с функции main(). Основные элементы:</p>
+                    <pre><code>#include &lt;stdio.h>
 
-<div class="player">
-    <h2 class="color-changing-text">лох</h2> <!-- Текст, который будет менять цвет -->
-    <audio id="audio" src="C:\Users\18kon_kn9b95p\Downloads\mysong.mp3.mp3" preload="auto"></audio>
-    <div>
-        <button id="playBtn" class="play-button">►</button> <!-- Символ "play" -->
-    </div>
-</div>
+int main() {
+    int x = 10;
+    printf("x = %d\n", x);
+    return 0;
+}</code></pre>
+                    <p data-i18n="c.syntax.keywords">Ключевые слова: int, char, float, double, if, else, while, for, return и др.</p>
+                </div>
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-cogs" style="color: var(--c-color);"></i> <span data-i18n="c.applications.title">Области применения</span></h3>
+                    <ul>
+                        <li data-i18n="c.applications.item1">Системное программирование: ОС, драйверы, встроенные системы</li>
+                        <li data-i18n="c.applications.item2">Высокопроизводительные вычисления</li>
+                        <li data-i18n="c.applications.item3">Разработка компиляторов и интерпретаторов</li>
+                        <li data-i18n="c.applications.item4">Создание библиотек для других языков</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-book" style="color: var(--c-color);"></i> <span data-i18n="c.resources.title">Ресурсы для изучения</span></h3>
+                    <ul>
+                        <li data-i18n="c.resources.item1">"The C Programming Language" (K&R)</li>
+                        <li data-i18n="c.resources.item2">Онлайн-курсы на Coursera, edX</li>
+                        <li data-i18n="c.resources.item3">Learn-C.org - интерактивный учебник</li>
+                        <li data-i18n="c.resources.item4">Документация GCC и стандартов C</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card c-feature-card">
+                    <h3><i class="fas fa-terminal" style="color: var(--c-color);"></i> <span data-i18n="c.commands.title">Основные команды</span></h3>
+                    <ul>
+                        <li data-i18n="c.commands.item1">Типы данных: int, float, char, double</li>
+                        <li data-i18n="c.commands.item2">Операторы: +, -, *, /, %, ++, --, &&, ||, !</li>
+                        <li data-i18n="c.commands.item3">Управление: if-else, switch, while, do-while, for</li>
+                        <li data-i18n="c.commands.item4">Функции: printf(), scanf(), malloc(), free()</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Раздел про язык C# -->
+    <section id="csharp-section" class="language-section csharp-section">
+        <div class="container">
+            <h2 class="section-title language-title csharp-title" data-i18n="csharp.title">Язык программирования C#</h2>
+            <div class="language-features">
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-info-circle" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.info.title">Общая информация</span></h3>
+                    <p data-i18n="csharp.info.text">C# — современный объектно-ориентированный язык, разработанный Microsoft в 2000 году как часть платформы .NET.</p>
+                    <ul>
+                        <li data-i18n="csharp.info.item1">Компилируется в промежуточный язык (IL), выполняемый CLR</li>
+                        <li data-i18n="csharp.info.item2">Сочетает возможности C++ и Java с новыми концепциями</li>
+                        <li data-i18n="csharp.info.item3">Поддерживает компонентно-ориентированное программирование</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-history" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.history.title">История развития</span></h3>
+                    <ul>
+                        <li data-i18n="csharp.history.item1">2000: анонс C# и .NET Framework</li>
+                        <li data-i18n="csharp.history.item2">2002: релиз C# 1.0 с Visual Studio .NET</li>
+                        <li data-i18n="csharp.history.item3">2005: C# 2.0 с generics и анонимными методами</li>
+                        <li data-i18n="csharp.history.item4">2007: C# 3.0 с LINQ и лямбда-выражениями</li>
+                        <li data-i18n="csharp.history.item5">2010: C# 4.0 с dynamic и параллельными задачами</li>
+                        <li data-i18n="csharp.history.item6">2012: C# 5.0 с async/await</li>
+                        <li data-i18n="csharp.history.item7">2015: C# 6.0 с Roslyn компилятором</li>
+                        <li data-i18n="csharp.history.item8">2017: C# 7.0 с кортежами и pattern matching</li>
+                        <li data-i18n="csharp.history.item9">2019: C# 8.0 с nullable reference types</li>
+                        <li data-i18n="csharp.history.item10">2020: C# 9.0 с records и init-only свойствами</li>
+                        <li data-i18n="csharp.history.item11">2021: C# 10.0 с global using и file-scoped namespaces</li>
+                        <li data-i18n="csharp.history.item12">2022: C# 11.0 с raw string literals</li>
+                        <li data-i18n="csharp.history.item13">2023: C# 12.0 с primary constructors</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-code" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.syntax.title">Особенности синтаксиса</span></h3>
+                    <pre><code>using System;
 
-<script>
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playBtn');
+class Program {
+    static void Main() {
+        Console.WriteLine("Hello, World!");
+        
+        var point = new Point(10, 20);
+        Console.WriteLine(point);
+    }
+}
 
-    let isPlaying = false;
-
-    playBtn.addEventListener('click', () => {
-        if (isPlaying) {
-            audio.pause(); // Приостановить воспроизведение
-            playBtn.innerHTML = '►'; // Вернуть символ "play"
-        } else {
-            audio.play(); // Запустить воспроизведение
-            playBtn.innerHTML = '❚❚'; // Изменить на символ "pause"
-        }
-        isPlaying = !isPlaying; // Переключить состояние
-    });
-</script>
-
+record Point(int X, int Y);</code></pre>
+                    <p data-i18n="csharp.syntax.concepts">Ключевые концепции: классы, интерфейсы, делегаты, события, свойства, индексаторы, атрибуты.</p>
+                </div>
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-cogs" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.applications.title">Области применения</span></h3>
+                    <ul>
+                        <li data-i18n="csharp.applications.item1">Десктопные приложения (Windows Forms, WPF)</li>
+                        <li data-i18n="csharp.applications.item2">Веб-разработка (ASP.NET Core, Blazor)</li>
+                        <li data-i18n="csharp.applications.item3">Мобильные приложения (Xamarin, MAUI)</li>
+                        <li data-i18n="csharp.applications.item4">Игры (Unity)</li>
+                        <li data-i18n="csharp.applications.item5">Облачные сервисы (Azure)</li>
+                        <li data-i18n="csharp.applications.item6">Микросервисы и API</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-book" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.resources.title">Ресурсы для изучения</span></h3>
+                    <ul>
+                        <li data-i18n="csharp.resources.item1">Официальная документация Microsoft</li>
+                        <li data-i18n="csharp.resources.item2">Книга "C# in Depth" (Jon Skeet)</li>
+                        <li data-i18n="csharp.resources.item3">Pluralsight, Udemy курсы</li>
+                        <li data-i18n="csharp.resources.item4">Microsoft Learn платформа</li>
+                        <li data-i18n="csharp.resources.item5">Stack Overflow сообщество</li>
+                    </ul>
+                </div>
+                <div class="language-feature-card csharp-feature-card">
+                    <h3><i class="fas fa-terminal" style="color: var(--csharp-color);"></i> <span data-i18n="csharp.commands.title">Основные команды</span></h3>
+                    <ul>
+                        <li data-i18n="csharp.commands.item1">Типы данных: int, double, string, bool, var</li>
+                        <li data-i18n="csharp.commands.item2">Управление: if-else, switch, while, do-while, for, foreach</li>
+                        <li data-i18n="csharp.commands.item3">ООП: class, interface, struct, enum, record</li>
+                        <li data-i18n="csharp.commands.item4">LINQ: Where, Select, OrderBy, GroupBy</li>
+                        <li data-i18n="csharp.commands.item5">Асинхронность: async, await, Task</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="support" class="support">
+        <div class="container support-content">
+            <div class="support-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h2 data-i18n="support.title">Поддержать автора</h2>
+            <p data-i18n="support.text">Если вам нравится этот сайт и вы хотите поддержать его развитие, вы можете сделать пожертвование.</p>
+            <div class="card-number">2202 2080 7074 0320</div>
+            <p data-i18n="support.thanks">Спасибо за вашу поддержку! ❤️</p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p data-i18n="footer.copyright">© 2023 Python Tutorial. Все права защищены.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Language switching functionality
+        const languageSwitcher = {
+            currentLang: 'ru',
+            translations: {
+                'ru': {
+                    'hero.title': 'Изучайте Python легко и эффективно',
+                    'hero.subtitle': 'Полное руководство по языку программирования Python для начинающих и опытных разработчиков.',
+                    'hero.button': 'Начать обучение',
+                    'features.title': 'Особенности Python',
+                    'features.card1.title': 'Интерпретируемость',
+                    'features.card1.text': 'Python - интерпретируемый язык, код выполняется построчно, что упрощает тестирование и отладку.',
+                    'features.card2.title': 'Динамическая типизация',
+                    'features.card2.text': 'Тип переменной определяется автоматически во время выполнения, что делает язык более гибким.',
+                    'features.card3.title': 'Многопарадигменность',
+                    'features.card3.text': 'Поддерживает ООП, процедурное и функциональное программирование, позволяя выбирать оптимальный подход.',
+                    'features.card4.title': 'Кроссплатформенность',
+                    'features.card4.text': 'Код работает на Windows, macOS, Linux без изменений благодаря переносимости интерпретатора.',
+                    'features.card5.title': 'Большое сообщество',
+                    'features.card5.text': 'Активное сообщество разработчиков, готовых помочь с любыми вопросами и проблемами.',
+                    'features.card6.title': 'Богатые библиотеки',
+                    'features.card6.text': 'Огромная коллекция библиотек для веб-разработки, анализа данных, машинного обучения и многого другого.',
+                    'advantages.title': 'Преимущества Python',
+                    'advantages.card1.title': 'Простота и читаемость',
+                    'advantages.card1.text': 'Python предлагает понятный синтаксис, что делает его привлекательным для опытных разработчиков и доступным для новичков. Код на Python часто выглядит как псевдокод, что облегчает его понимание.',
+                    'advantages.card2.title': 'Богатая экосистема',
+                    'advantages.card2.text': 'Большое число полезных библиотек и модулей позволяет быстро решать различные задачи: Django/Flask для веба, Pandas/NumPy для данных, TensorFlow/PyTorch для ML, и многие другие.',
+                    'advantages.card3.title': 'Кроссплатформенность',
+                    'advantages.card3.text': 'Python работает на большинстве операционных систем: Windows, macOS, Linux. Код, написанный на Python, может быть запущен на разных платформах без изменений.',
+                    'advantages.card4.title': 'Интеграция с другими языками',
+                    'advantages.card4.text': 'Python позволяет легко интегрировать код на C/C++, Java и других языках. Это дает возможность использовать существующие библиотеки и расширять функциональность Python.',
+                    'advantages.card5.title': 'Поддержка сообщества',
+                    'advantages.card5.text': 'Активное сообщество разработчиков всегда готово помочь новичкам. Существует множество форумов, чатов и ресурсов с готовыми решениями распространенных задач.',
+                    'advantages.card6.title': 'Гибкость парадигм',
+                    'advantages.card6.text': 'Python поддерживает ООП, функциональное, императивное и аспектно-ориентированное программирование, позволяя разработчикам выбирать оптимальный подход для каждой задачи.',
+                    'history.title': 'История Python',
+                    'history.item1': 'Гвидо ван Россум начинает работу над Python как хобби-проектом во время рождественских каникул. Название взято из шоу "Летающий цирк Монти Пайтона".',
+                    'history.item2': 'Выпущена первая версия Python (0.9.0) с базовыми возможностями. Язык уже включал классы, наследование и обработку исключений.',
+                    'history.item3': 'Версия 1.0 добавляет функционал для обработки списков данных. Появляются lambda, map, filter и reduce.',
+                    'history.item4': 'Python 2.0 приносит поддержку Unicode и улучшенную систему сборки мусора. Добавлены списковые включения (list comprehensions).',
+                    'history.item5': 'Выпущен Python 3.0 с устранением многих недостатков предыдущих версий. Это было крупное обновление, несовместимое с Python 2.x.',
+                    'history.item6': 'Официальное прекращение поддержки Python 2.7. Все проекты переходят на Python 3, который продолжает активно развиваться.',
+                    'commands.title': 'Основные команды Python',
+                    'commands.categories.all': 'Все',
+                    'commands.categories.data': 'Работа с данными',
+                    'commands.categories.flow': 'Управление потоком',
+                    'commands.categories.objects': 'Работа с объектами',
+                    'commands.data.print': 'Выводит данные на экран. Основная функция для отображения информации.',
+                    'commands.data.input': 'Получает ввод данных от пользователя. Возвращает строку.',
+                    'commands.data.len': 'Возвращает длину объекта (строки, списка, кортежа, словаря).',
+                    'commands.data.type': 'Возвращает тип объекта.',
+                    'commands.flow.if': 'Условные операторы для выполнения различных действий в зависимости от условий.',
+                    'commands.flow.for': 'Цикл для перебора элементов в последовательности.',
+                    'commands.flow.while': 'Цикл, выполняющийся пока условие истинно.',
+                    'commands.flow.break': 'Прерывает выполнение цикла.',
+                    'commands.flow.continue': 'Переходит к следующей итерации цикла, пропуская оставшийся код.',
+                    'commands.objects.del': 'Удаляет переменную или элемент из списка/словаря.',
+                    'commands.objects.getattr': 'Возвращает значение атрибута объекта.',
+                    'commands.objects.setattr': 'Устанавливает значение атрибута объекта.',
+                    'commands.objects.hasattr': 'Проверяет наличие атрибута у объекта.',
+                    'libraries.title': '19 полезных библиотек Python',
+                    'libraries.webdev': 'Для веб-разработки',
+                    'libraries.httpx': 'HTTP-клиент для синхронных и асинхронных запросов',
+                    'libraries.celery': 'Распределенная очередь задач',
+                    'libraries.scrapy': 'Фреймворк для веб-скрапинга',
+                    'libraries.dash': 'Фреймворк для аналитических веб-приложений',
+                    'libraries.ml': 'Для Machine Learning',
+                    'libraries.numpy': 'Работа с многомерными массивами',
+                    'libraries.pandas': 'Анализ и обработка данных',
+                    'libraries.tensorflow': 'Фреймворк для машинного обучения',
+                    'libraries.lightgbm': 'Градиентный бустинг для задач ML',
+                    'libraries.data': 'Для форматирования и очистки данных',
+                    'libraries.dora': 'Очистка и анализ данных',
+                    'libraries.datacleaner': 'Автоматическая очистка данных',
+                    'libraries.tabulate': 'Форматирование табличных данных',
+                    'libraries.scrubadub': 'Удаление конфиденциальных данных',
+                    'libraries.viz': 'Для визуализации данных',
+                    'libraries.matplotlib': 'Построение графиков и диаграмм',
+                    'libraries.altair': 'Статистическая визуализация',
+                    'libraries.bokeh': 'Интерактивная визуализация для браузеров',
+                    'libraries.leather': 'Простая и быстрая визуализация',
+                    'libraries.bots': 'Для создания Telegram-ботов',
+                    'libraries.aiogram': 'Асинхронный фреймворк для ботов',
+                    'libraries.ptb': 'Синхронный фреймворк для ботов',
+                    'libraries.telebot': 'Простой API для создания ботов',
+                    'resources.title': 'Ресурсы для изучения Python',
+                    'resources.card1.title': 'Официальная документация',
+                    'resources.card1.text': 'Полное руководство по Python с примерами и объяснениями.',
+                    'resources.card2.title': 'LearnPython.org',
+                    'resources.card2.text': 'Интерактивный учебник Python с упражнениями.',
+                    'resources.card3.title': 'CheckiO',
+                    'resources.card3.text': 'Изучайте Python через решение игровых задач.',
+                    'resources.card4.title': 'MoscowPython',
+                    'resources.card4.text': 'YouTube канал с лекциями и разборами задач.',
+                    'resources.card5.title': 'Real Python',
+                    'resources.card5.text': 'Уроки и статьи для углубленного изучения Python.',
+                    'resources.card6.title': 'W3Schools',
+                    'resources.card6.text': 'Простые примеры и упражнения по Python.',
+                    'resources.link': 'Перейти →',
+                    'c.title': 'Язык программирования C',
+                    'c.features.title': 'Особенности',
+                    'c.features.text': 'C — компилируемый статически типизированный язык общего назначения. Его синтаксис стал основой для C++, C#, Java и Objective-C.',
+                    'c.features.item1': 'Близость к машинному коду, работа с символами, числами и адресами',
+                    'c.features.item2': 'Статическая типизация: тип переменной определяется при объявлении',
+                    'c.features.item3': 'Основные конструкции управления: циклы, условия, операторы выбора',
+                    'c.history.title': 'История',
+                    'c.history.text': 'Язык C был разработан в 1969–1973 годах сотрудником Bell Labs Деннисом Ритчи как развитие языка Би. Первоначально предназначался для реализации UNIX.',
+                    'c.history.item1': '1989: опубликован стандарт ANSI C (C89)',
+                    'c.history.item2': '1990: принят ISO как стандарт ISO C',
+                    'c.history.item3': '1999: стандарт C99 с новыми возможностями',
+                    'c.history.item4': '2011: стандарт C11 с многопоточностью',
+                    'c.syntax.title': 'Синтаксис',
+                    'c.syntax.text': 'Программа на C начинается с функции main(). Основные элементы:',
+                    'c.syntax.keywords': 'Ключевые слова: int, char, float, double, if, else, while, for, return и др.',
+                    'c.applications.title': 'Области применения',
+                    'c.applications.item1': 'Системное программирование: ОС, драйверы, встроенные системы',
+                    'c.applications.item2': 'Высокопроизводительные вычисления',
+                    'c.applications.item3': 'Разработка компиляторов и интерпретаторов',
+                    'c.applications.item4': 'Создание библиотек для других языков',
+                    'c.resources.title': 'Ресурсы для изучения',
+                    'c.resources.item1': '"The C Programming Language" (K&R)',
+                    'c.resources.item2': 'Онлайн-курсы на Coursera, edX',
+                    'c.resources.item3': 'Learn-C.org - интерактивный учебник',
+                    'c.resources.item4': 'Документация GCC и стандартов C',
+                    'c.commands.title': 'Основные команды',
+                    'c.commands.item1': 'Типы данных: int, float, char, double',
+                    'c.commands.item2': 'Операторы: +, -, *, /, %, ++, --, &&, ||, !',
+                    'c.commands.item3': 'Управление: if-else, switch, while, do-while, for',
+                    'c.commands.item4': 'Функции: printf(), scanf(), malloc(), free()',
+                    'csharp.title': 'Язык программирования C#',
+                    'csharp.info.title': 'Общая информация',
+                    'csharp.info.text': 'C# — современный объектно-ориентированный язык, разработанный Microsoft в 2000 году как часть платформы .NET.',
+                    'csharp.info.item1': 'Компилируется в промежуточный язык (IL), выполняемый CLR',
+                    'csharp.info.item2': 'Сочетает возможности C++ и Java с новыми концепциями',
+                    'csharp.info.item3': 'Поддерживает компонентно-ориентированное программирование',
+                    'csharp.history.title': 'История развития',
+                    'csharp.history.item1': '2000: анонс C# и .NET Framework',
+                    'csharp.history.item2': '2002: релиз C# 1.0 с Visual Studio .NET',
+                    'csharp.history.item3': '2005: C# 2.0 с generics и анонимными методами',
+                    'csharp.history.item4': '2007: C# 3.0 с LINQ и лямбда-выражениями',
+                    'csharp.history.item5': '2010: C# 4.0 с dynamic и параллельными задачами',
+                    'csharp.history.item6': '2012: C# 5.0 с async/await',
+                    'csharp.history.item7': '2015: C# 6.0 с Roslyn компилятором',
+                    'csharp.history.item8': '2017: C# 7.0 с кортежами и pattern matching',
+                    'csharp.history.item9': '2019: C# 8.0 с nullable reference types',
+                    'csharp.history.item10': '2020: C# 9.0 с records и init-only свойствами',
+                    'csharp.history.item11': '2021: C# 10.0 с global using и file-scoped namespaces',
+                    'csharp.history.item12': '2022: C# 11.0 с raw string literals',
+                    'csharp.history.item13': '2023: C# 12.0 с primary constructors',
+                    'csharp.syntax.title': 'Особенности синтаксиса',
+                    'csharp.syntax.concepts': 'Ключевые концепции: классы, интерфейсы, делегаты, события, свойства, индексаторы, атрибуты.',
+                    'csharp.applications.title': 'Области применения',
+                    'csharp.applications.item1': 'Десктопные приложения (Windows Forms, WPF)',
+                    'csharp.applications.item2': 'Веб-разработка (ASP.NET Core, Blazor)',
+                    'csharp.applications.item3': 'Мобильные приложения (Xamarin, MAUI)',
+                    'csharp.applications.item4': 'Игры (Unity)',
+                    'csharp.applications.item5': 'Облачные сервисы (Azure)',
+                    'csharp.applications.item6': 'Микросервисы и API',
+                    'csharp.resources.title': 'Ресурсы для изучения',
+                    'csharp.resources.item1': 'Официальная документация Microsoft',
+                    'csharp.resources.item2': 'Книга "C# in Depth" (Jon Skeet)',
+                    'csharp.resources.item3': 'Pluralsight, Udemy курсы',
+                    'csharp.resources.item4': 'Microsoft Learn платформа',
+                    'csharp.resources.item5': 'Stack Overflow сообщество',
+                    'csharp.commands.title': 'Основные команды',
+                    'csharp.commands.item1': 'Типы данных: int, double, string, bool, var',
+                    'csharp.commands.item2': 'Управление: if-else, switch, while, do-while, for, foreach',
+                    'csharp.commands.item3': 'ООП: class, interface, struct, enum, record',
+                    'csharp.commands.item4': 'LINQ: Where, Select, OrderBy, GroupBy',
+                    'csharp.commands.item5': 'Асинхронность: async, await, Task',
+                    'support.title': 'Поддержать автора',
+                    'support.text': 'Если вам нравится этот сайт и вы хотите поддержать его развитие, вы можете сделать пожертвование.',
+                    'support.thanks': 'Спасибо за вашу поддержку! ❤️',
+                    'footer.copyright': '© 2023 Python Tutorial. Все права защищены.'
+                },
+                'en': {
+                    'hero.title': 'Learn Python Easily and Effectively',
+                    'hero.subtitle': 'Complete guide to Python programming language for beginners and experienced developers.',
+                    'hero.button': 'Start Learning',
+                    'features.title': 'Python Features',
+                    'features.card1.title': 'Interpreted Language',
+                    'features.card1.text': 'Python is an interpreted language, code is executed line by line, which simplifies testing and debugging.',
+                    'features.card2.title': 'Dynamic Typing',
+                    'features.card2.text': 'Variable type is determined automatically at runtime, making the language more flexible.',
+                    'features.card3.title': 'Multi-paradigm',
+                    'features.card3.text': 'Supports OOP, procedural and functional programming, allowing to choose the optimal approach.',
+                    'features.card4.title': 'Cross-platform',
+                    'features.card4.text': 'Code works on Windows, macOS, Linux without changes thanks to interpreter portability.',
+                    'features.card5.title': 'Large Community',
+                    'features.card5.text': 'Active developer community ready to help with any questions and problems.',
+                    'features.card6.title': 'Rich Libraries',
+                    'features.card6.text': 'Huge collection of libraries for web development, data analysis, machine learning and much more.',
+                    'advantages.title': 'Python Advantages',
+                    'advantages.card1.title': 'Simplicity and Readability',
+                    'advantages.card1.text': 'Python offers clear syntax, making it attractive for experienced developers and accessible for beginners. Python code often looks like pseudocode, making it easier to understand.',
+                    'advantages.card2.title': 'Rich Ecosystem',
+                    'advantages.card2.text': 'A large number of useful libraries and modules allows you to quickly solve various problems: Django/Flask for web, Pandas/NumPy for data, TensorFlow/PyTorch for ML, and many others.',
+                    'advantages.card3.title': 'Cross-platform',
+                    'advantages.card3.text': 'Python works on most operating systems: Windows, macOS, Linux. Code written in Python can be run on different platforms without changes.',
+                    'advantages.card4.title': 'Integration with Other Languages',
+                    'advantages.card4.text': 'Python makes it easy to integrate code in C/C++, Java and other languages. This makes it possible to use existing libraries and extend Python functionality.',
+                    'advantages.card5.title': 'Community Support',
+                    'advantages.card5.text': 'An active developer community is always ready to help beginners. There are many forums, chats and resources with ready-made solutions to common problems.',
+                    'advantages.card6.title': 'Flexibility of Paradigms',
+                    'advantages.card6.text': 'Python supports OOP, functional, imperative and aspect-oriented programming, allowing developers to choose the optimal approach for each task.',
+                    'history.title': 'Python History',
+                    'history.item1': 'Guido van Rossum begins work on Python as a hobby project during Christmas holidays. The name is taken from the show "Monty Python\'s Flying Circus".',
+                    'history.item2': 'First version of Python (0.9.0) released with basic features. The language already included classes, inheritance and exception handling.',
+                    'history.item3': 'Version 1.0 adds functionality for data list processing. Lambda, map, filter and reduce appear.',
+                    'history.item4': 'Python 2.0 brings Unicode support and improved garbage collection system. List comprehensions are added.',
+                    'history.item5': 'Python 3.0 released with many previous version shortcomings fixed. This was a major update, incompatible with Python 2.x.',
+                    'history.item6': 'Official end of support for Python 2.7. All projects switch to Python 3, which continues to actively develop.',
+                    'commands.title': 'Basic Python Commands',
+                    'commands.categories.all': 'All',
+                    'commands.categories.data': 'Data Work',
+                    'commands.categories.flow': 'Flow Control',
+                    'commands.categories.objects': 'Objects Work',
+                    'commands.data.print': 'Outputs data to the screen. The main function for displaying information.',
+                    'commands.data.input': 'Gets input from the user. Returns a string.',
+                    'commands.data.len': 'Returns the length of an object (string, list, tuple, dictionary).',
+                    'commands.data.type': 'Returns the type of an object.',
+                    'commands.flow.if': 'Conditional statements for performing different actions depending on conditions.',
+                    'commands.flow.for': 'Loop for iterating over elements in a sequence.',
+                    'commands.flow.while': 'Loop that executes while the condition is true.',
+                    'commands.flow.break': 'Breaks the loop execution.',
+                    'commands.flow.continue': 'Goes to the next iteration of the loop, skipping the remaining code.',
+                    'commands.objects.del': 'Deletes a variable or an item from a list/dictionary.',
+                    'commands.objects.getattr': 'Returns the value of an object attribute.',
+                    'commands.objects.setattr': 'Sets the value of an object attribute.',
+                    'commands.objects.hasattr': 'Checks if an object has an attribute.',
+                    'libraries.title': '19 Useful Python Libraries',
+                    'libraries.webdev': 'For Web Development',
+                    'libraries.httpx': 'HTTP client for synchronous and asynchronous requests',
+                    'libraries.celery': 'Distributed task queue',
+                    'libraries.scrapy': 'Web scraping framework',
+                    'libraries.dash': 'Framework for analytical web applications',
+                    'libraries.ml': 'For Machine Learning',
+                    'libraries.numpy': 'Working with multidimensional arrays',
+                    'libraries.pandas': 'Data analysis and processing',
+                    'libraries.tensorflow': 'Machine learning framework',
+                    'libraries.lightgbm': 'Gradient boosting for ML tasks',
+                    'libraries.data': 'For Data Formatting and Cleaning',
+                    'libraries.dora': 'Data cleaning and analysis',
+                    'libraries.datacleaner': 'Automatic data cleaning',
+                    'libraries.tabulate': 'Tabular data formatting',
+                    'libraries.scrubadub': 'Removing confidential data',
+                    'libraries.viz': 'For Data Visualization',
+                    'libraries.matplotlib': 'Plotting graphs and charts',
+                    'libraries.altair': 'Statistical visualization',
+                    'libraries.bokeh': 'Interactive visualization for browsers',
+                    'libraries.leather': 'Simple and fast visualization',
+                    'libraries.bots': 'For Telegram Bots',
+                    'libraries.aiogram': 'Asynchronous framework for bots',
+                    'libraries.ptb': 'Synchronous framework for bots',
+                    'libraries.telebot': 'Simple API for creating bots',
+                    'resources.title': 'Python Learning Resources',
+                    'resources.card1.title': 'Official Documentation',
+                    'resources.card1.text': 'Complete Python guide with examples and explanations.',
+                    'resources.card2.title': 'LearnPython.org',
+                    'resources.card2.text': 'Interactive Python tutorial with exercises.',
+                    'resources.card3.title': 'CheckiO',
+                    'resources.card3.text': 'Learn Python by solving game tasks.',
+                    'resources.card4.title': 'MoscowPython',
+                    'resources.card4.text': 'YouTube channel with lectures and task analysis.',
+                    'resources.card5.title': 'Real Python',
+                    'resources.card5.text': 'Lessons and articles for in-depth Python learning.',
+                    'resources.card6.title': 'W3Schools',
+                    'resources.card6.text': 'Simple examples and exercises in Python.',
+                    'resources.link': 'Go →',
+                    'c.title': 'C Programming Language',
+                    'c.features.title': 'Features',
+                    'c.features.text': 'C is a compiled, statically typed general-purpose language. Its syntax became the basis for C++, C#, Java and Objective-C.',
+                    'c.features.item1': 'Close to machine code, working with characters, numbers and addresses',
+                    'c.features.item2': 'Static typing: variable type is determined at declaration',
+                    'c.features.item3': 'Basic control structures: loops, conditions, selection statements',
+                    'c.history.title': 'History',
+                    'c.history.text': 'The C language was developed in 1969-1973 by Bell Labs employee Dennis Ritchie as a development of the B language. Originally intended for UNIX implementation.',
+                    'c.history.item1': '1989: ANSI C standard (C89) published',
+                    'c.history.item2': '1990: Adopted by ISO as ISO C standard',
+                    'c.history.item3': '1999: C99 standard with new features',
+                    'c.history.item4': '2011: C11 standard with multithreading',
+                    'c.syntax.title': 'Syntax',
+                    'c.syntax.text': 'A C program starts with the main() function. Basic elements:',
+                    'c.syntax.keywords': 'Keywords: int, char, float, double, if, else, while, for, return, etc.',
+                    'c.applications.title': 'Applications',
+                    'c.applications.item1': 'System programming: OS, drivers, embedded systems',
+                    'c.applications.item2': 'High performance computing',
+                    'c.applications.item3': 'Compiler and interpreter development',
+                    'c.applications.item4': 'Creating libraries for other languages',
+                    'c.resources.title': 'Learning Resources',
+                    'c.resources.item1': '"The C Programming Language" (K&R)',
+                    'c.resources.item2': 'Online courses on Coursera, edX',
+                    'c.resources.item3': 'Learn-C.org - interactive tutorial',
+                    'c.resources.item4': 'GCC documentation and C standards',
+                    'c.commands.title': 'Basic Commands',
+                    'c.commands.item1': 'Data types: int, float, char, double',
+                    'c.commands.item2': 'Operators: +, -, *, /, %, ++, --, &&, ||, !',
+                    'c.commands.item3': 'Control: if-else, switch, while, do-while, for',
+                    'c.commands.item4': 'Functions: printf(), scanf(), malloc(), free()',
+                    'csharp.title': 'C# Programming Language',
+                    'csharp.info.title': 'General Information',
+                    'csharp.info.text': 'C# is a modern object-oriented language developed by Microsoft in 2000 as part of the .NET platform.',
+                    'csharp.info.item1': 'Compiles to intermediate language (IL) executed by CLR',
+                    'csharp.info.item2': 'Combines features of C++ and Java with new concepts',
+                    'csharp.info.item3': 'Supports component-oriented programming',
+                    'csharp.history.title': 'Development History',
+                    'csharp.history.item1': '2000: Announcement of C# and .NET Framework',
+                    'csharp.history.item2': '2002: Release of C# 1.0 with Visual Studio .NET',
+                    'csharp.history.item3': '2005: C# 2.0 with generics and anonymous methods',
+                    'csharp.history.item4': '2007: C# 3.0 with LINQ and lambda expressions',
+                    'csharp.history.item5': '2010: C# 4.0 with dynamic and parallel tasks',
+                    'csharp.history.item6': '2012: C# 5.0 with async/await',
+                    'csharp.history.item7': '2015: C# 6.0 with Roslyn compiler',
+                    'csharp.history.item8': '2017: C# 7.0 with tuples and pattern matching',
+                    'csharp.history.item9': '2019: C# 8.0 with nullable reference types',
+                    'csharp.history.item10': '2020: C# 9.0 with records and init-only properties',
+                    'csharp.history.item11': '2021: C# 10.0 with global using and file-scoped namespaces',
+                    'csharp.history.item12': '2022: C# 11.0 with raw string literals',
+                    'csharp.history.item13': '2023: C# 12.0 with primary constructors',
+                    'csharp.syntax.title': 'Syntax Features',
+                    'csharp.syntax.concepts': 'Key concepts: classes, interfaces, delegates, events, properties, indexers, attributes.',
+                    'csharp.applications.title': 'Applications',
+                    'csharp.applications.item1': 'Desktop applications (Windows Forms, WPF)',
+                    'csharp.applications.item2': 'Web development (ASP.NET Core, Blazor)',
+                    'csharp.applications.item3': 'Mobile applications (Xamarin, MAUI)',
+                    'csharp.applications.item4': 'Games (Unity)',
+                    'csharp.applications.item5': 'Cloud services (Azure)',
+                    'csharp.applications.item6': 'Microservices and API',
+                    'csharp.resources.title': 'Learning Resources',
+                    'csharp.resources.item1': 'Official Microsoft documentation',
+                    'csharp.resources.item2': 'Book "C# in Depth" (Jon Skeet)',
+                    'csharp.resources.item3': 'Pluralsight, Udemy courses',
+                    'csharp.resources.item4': 'Microsoft Learn platform',
+                    'csharp.resources.item5': 'Stack Overflow community',
+                    'csharp.commands.title': 'Basic Commands',
+                    'csharp.commands.item1': 'Data types: int, double, string, bool, var',
+                    'csharp.commands.item2': 'Control: if-else, switch, while, do-while, for, foreach',
+                    'csharp.commands.item3': 'OOP: class, interface, struct, enum, record',
+                    'csharp.commands.item4': 'LINQ: Where, Select, OrderBy, GroupBy',
+                    'csharp.commands.item5': 'Asynchrony: async, await, Task',
+                    'support.title': 'Support the Author',
+                    'support.text': 'If you like this site and want to support its development, you can make a donation.',
+                    'support.thanks': 'Thank you for your support! ❤️',
+                    'footer.copyright': '© 2023 Python Tutorial. All rights reserved.'
+                }
+            },
+            init: function() {
+                // Set language from localStorage or default to 'ru'
+                this.currentLang = localStorage.getItem('lang') || 'ru';
+                this.updateLanguageButtons();
+                this.applyLanguage();
+                
+                // Add event listeners to language buttons
+                document.querySelectorAll('.language-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.currentLang = btn.dataset.lang;
+                        localStorage.setItem('lang', this.currentLang);
+                        this.updateLanguageButtons();
+                        this.applyLanguage();
+                    });
+                });
+            },
+            updateLanguageButtons: function() {
+                document.querySelectorAll('.language-btn').forEach(btn => {
+                    if (btn.dataset.lang === this.currentLang) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            },
+            applyLanguage: function() {
+                const langData = this.translations[this.currentLang];
+                
+                // Update all elements with data-i18n attribute
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (langData[key]) {
+                        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                            el.value = langData[key];
+                        } else {
+                            el.textContent = langData[key];
+                        }
+                    }
+                });
+            }
+        };
+        
+        // Initialize language switcher
+        languageSwitcher.init();
+        
+        // Filter commands by category
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const category = btn.dataset.category;
+                const commands = document.querySelectorAll('.command-card');
+                
+                commands.forEach(cmd => {
+                    if (category === 'all' || cmd.dataset.category === category) {
+                        cmd.style.display = 'block';
+                    } else {
+                        cmd.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
